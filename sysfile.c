@@ -13,6 +13,7 @@
 #include "fs.h"
 #include "file.h"
 #include "fcntl.h"
+#include "syscall.h"
 
 // Fetch the nth word-sized system call argument as a file descriptor
 // and return both the descriptor and the corresponding struct file.
@@ -66,6 +67,8 @@ sys_dup(void)
 int
 sys_read(void)
 {
+    //add scount
+    proc->scount++;
   struct file *f;
   int n;
   char *p;
@@ -78,6 +81,8 @@ sys_read(void)
 int
 sys_write(void)
 {
+    //add scount
+    proc->scount++;
   struct file *f;
   int n;
   char *p;
@@ -90,6 +95,8 @@ sys_write(void)
 int
 sys_close(void)
 {
+    //add scount
+    proc->scount++;
   int fd;
   struct file *f;
   
@@ -103,6 +110,8 @@ sys_close(void)
 int
 sys_fstat(void)
 {
+    //add scount
+    proc->scount++;
   struct file *f;
   struct stat *st;
   
@@ -115,6 +124,9 @@ sys_fstat(void)
 int
 sys_link(void)
 {
+     //add scount
+    proc->scount++;
+
   char name[DIRSIZ], *new, *old;
   struct inode *dp, *ip;
 
@@ -181,6 +193,9 @@ isdirempty(struct inode *dp)
 int
 sys_unlink(void)
 {
+    //add scount
+    proc->scount++;
+
   struct inode *ip, *dp;
   struct dirent de;
   char name[DIRSIZ], *path;
@@ -283,6 +298,8 @@ create(char *path, short type, short major, short minor)
 int
 sys_open(void)
 {
+    //add scount
+    proc->scount++;
   char *path;
   int fd, omode;
   struct file *f;
@@ -333,6 +350,8 @@ sys_open(void)
 int
 sys_mkdir(void)
 {
+    //add scount
+    proc->scount++;
   char *path;
   struct inode *ip;
 
@@ -349,6 +368,8 @@ sys_mkdir(void)
 int
 sys_mknod(void)
 {
+    //add scount
+    proc->scount++;
   struct inode *ip;
   char *path;
   int len;
@@ -370,6 +391,8 @@ sys_mknod(void)
 int
 sys_chdir(void)
 {
+    //add scount
+    proc->scount++;
   char *path;
   struct inode *ip;
 
@@ -394,6 +417,9 @@ sys_chdir(void)
 int
 sys_exec(void)
 {
+    //add scount
+    proc->scount++;
+
   char *path, *argv[MAXARG];
   int i;
   uint uargv, uarg;
@@ -423,7 +449,8 @@ sys_pipe(void)
   int *fd;
   struct file *rf, *wf;
   int fd0, fd1;
-
+//add scount
+    proc->scount++;
   if(argptr(0, (void*)&fd, 2*sizeof(fd[0])) < 0)
     return -1;
   if(pipealloc(&rf, &wf) < 0)

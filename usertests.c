@@ -1703,6 +1703,38 @@ rand()
   return randstate;
 }
 
+void counttest(void){
+    printf(1,"testing count\n");
+
+  printf(1,"init, count = %d", count());
+  if(mkdir("dir0") < 0){
+    printf(stdout, "mkdir failed\n");
+    exit();
+  }
+  printf(1,"mkdir, count = %d", count());
+
+  if(chdir("dir0") < 0){
+    printf(stdout, "chdir dir0 failed\n");
+    exit();
+  }
+
+  printf(1,"chdir, count = %d", count());
+  if(chdir("..") < 0){
+    printf(stdout, "chdir .. failed\n");
+    exit();
+  }
+
+  if(unlink("dir0") < 0){
+    printf(stdout, "unlink dir0 failed\n");
+    exit();
+  }
+  printf(stdout, "mkdir test ok\n");
+
+  printf(1,"unlink, count = %d", count());
+    int num = count();
+
+    printf(1,"count = %d",num);
+}
 int
 main(int argc, char *argv[])
 {
@@ -1714,44 +1746,44 @@ main(int argc, char *argv[])
   }
   close(open("usertests.ran", O_CREATE));
 
-  createdelete();
-  linkunlink();
-  concreate();
-  fourfiles();
-  sharedfd();
-
-  bigargtest();
-  bigwrite();
-  bigargtest();
-  bsstest();
-  sbrktest();
-  validatetest();
-
-  opentest();
-  writetest();
-  writetest1();
-  createtest();
-
-  openiputtest();
-  exitiputtest();
-  iputtest();
-
-  mem();
-  pipe1();
-  preempt();
-  exitwait();
-
-  rmdot();
-  fourteen();
-  bigfile();
-  subdir();
-  linktest();
-  unlinkread();
-  dirfile();
-  iref();
-  forktest();
-  bigdir(); // slow
-  exectest();
-
+//  createdelete();
+//  linkunlink();
+//  concreate();
+//  fourfiles();
+//  sharedfd();
+//
+//  bigargtest();
+//  bigwrite();
+//  bigargtest();
+//  bsstest();
+//  sbrktest();
+//  validatetest();
+//
+//  opentest();
+//  writetest();
+//  writetest1();
+//  createtest();
+//
+//  openiputtest();
+//  exitiputtest();
+//  iputtest();
+//
+//  mem();
+//  pipe1();
+//  preempt();
+//  exitwait();
+//
+//  rmdot();
+//  fourteen();
+//  bigfile();
+//  subdir();
+//  linktest();
+//  unlinkread();
+//  dirfile();
+//  iref();
+//  forktest();
+//  bigdir(); // slow
+//  exectest();
+    counttest();
   exit();
 }

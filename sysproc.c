@@ -10,12 +10,19 @@
 int
 sys_fork(void)
 {
-  return fork();
+    int pidfork = fork();
+    if(pidfork == 0)
+        proc->scount = 0;
+    else
+        proc->scount++;
+    return pidfork;
 }
 
 int
 sys_exit(void)
 {
+    //add scount
+    proc->scount++;
   exit();
   return 0;  // not reached
 }
@@ -23,12 +30,16 @@ sys_exit(void)
 int
 sys_wait(void)
 {
+    //add scount
+    proc->scount++;
   return wait();
 }
 
 int
 sys_kill(void)
 {
+    //add scount
+    proc->scount++;
   int pid;
 
   if(argint(0, &pid) < 0)
@@ -39,12 +50,16 @@ sys_kill(void)
 int
 sys_getpid(void)
 {
+    //add scount
+    proc->scount++;
   return proc->pid;
 }
 
 int
 sys_sbrk(void)
 {
+    //add scount
+    proc->scount++;
   int addr;
   int n;
 
@@ -59,6 +74,8 @@ sys_sbrk(void)
 int
 sys_sleep(void)
 {
+    //add scount
+    proc->scount++;
   int n;
   uint ticks0;
   
@@ -82,10 +99,22 @@ sys_sleep(void)
 int
 sys_uptime(void)
 {
+    //add scount
+    proc->scount++;
   uint xticks;
   
   acquire(&tickslock);
   xticks = ticks;
   release(&tickslock);
   return xticks;
+}
+
+//add new count syscall
+//need to be implemented
+int
+sys_count(void)
+{
+    //add scount
+    proc->scount++;
+    return proc->scount;
 }
