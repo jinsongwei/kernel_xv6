@@ -283,6 +283,7 @@ scheduler(void)
   struct proc *run_p[NPROC];
     
   unsigned int i;
+  //init them
   for(i=0; i<NPROC; i++){
       run_p[i] = 0;
   }
