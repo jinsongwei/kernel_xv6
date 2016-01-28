@@ -11,8 +11,10 @@ int
 sys_fork(void)
 {
     int pidfork = fork();
-    if(pidfork == 0)
+    if(pidfork == 0){
         proc->scount = 0;
+        proc->ticket=10;
+    }
     else
         proc->scount++;
     return pidfork;
