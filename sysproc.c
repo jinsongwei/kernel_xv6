@@ -7,6 +7,23 @@
 #include "mmu.h"
 #include "proc.h"
 
+char lot_name[16] = "lotterytest";
+char child_name[16] = "child";
+
+//int compare_string(char first[], char second[]){
+//    if(sizeof(first) != sizeof(second))
+//        return 0;
+//    unsigned int i = 0;
+//
+//    for(;i< sizeof(first);i++){
+//        if(first[i] == second[i])
+//            continue;
+//        else 
+//            return 0;
+//    }
+//    return 1;
+//}
+
 int
 sys_fork(void)
 {

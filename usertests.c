@@ -1784,6 +1784,8 @@ main(int argc, char *argv[])
 //  forktest();
 //  bigdir(); // slow
 //  exectest();
-    counttest();
-  exit();
+//    counttest();
+    //lottery_test();
+    
+     exit();
 }
