@@ -16,19 +16,19 @@ int stdout = 1;
 void counttest(void){
     printf(1,"testing count\n");
 
-  printf(1,"init, count = %d", count());
+  printf(1,"init, count = %d\n", count());
   if(mkdir("dir0") < 0){
     printf(stdout, "mkdir failed\n");
     exit();
   }
-  printf(1,"mkdir, count = %d", count());
+  printf(1,"mkdir, syscall count = %d\n", count());
 
   if(chdir("dir0") < 0){
     printf(stdout, "chdir dir0 failed\n");
     exit();
   }
 
-  printf(1,"chdir, count = %d", count());
+  printf(1,"chdir, syscall count = %d\n", count());
   if(chdir("..") < 0){
     printf(stdout, "chdir .. failed\n");
     exit();
@@ -38,12 +38,11 @@ void counttest(void){
     printf(stdout, "unlink dir0 failed\n");
     exit();
   }
-  printf(stdout, "mkdir test ok\n");
 
-  printf(1,"unlink, count = %d", count());
+  printf(1,"unlink, syscall count = %d\n", count());
     int num = count();
 
-    printf(1,"count = %d",num);
+    printf(1,"total syscall count = %d\n",num);
 }
 
 int main(){

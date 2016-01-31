@@ -320,7 +320,12 @@ scheduler(void)
         //get all runnable processes
         i=0;
         for(p = ptable.proc; p<&ptable.proc[NPROC];p++){
-            p->ticket = 10;
+            if(compare_string(p->name,lot_child)){
+                 p->ticket = 50;
+                 tickets_base = 10;
+            }
+            else
+                p->ticket = 10;
             if(p->state == RUNNABLE){
                 run_p[i] = p;
                 i++;
@@ -349,12 +354,10 @@ scheduler(void)
                         }
                     }
                 }
-
-
                 // start lottery schedule among run_p processes.
                 unsigned int max = 0;
                 unsigned int rd = 0;
-                unsigned int range = 10;
+                unsigned int range = 0;
                 for(i=0;i<NPROC && run_p[i] != 0;i++){
                     max += run_p[i]->ticket;
                 }
@@ -365,14 +368,15 @@ scheduler(void)
                     range += run_p[i]->ticket;
                     i++;
                 }
+                i--;
                 p = run_p[i];
 
-                if(compare_string(p->name,lot_child)){
+                if(compare_string(run_p[i]->name,lot_child)){
                     c_win++;
-                    cprintf("max= %d, t_num = %d, %s win %d time lottery\n",max,rd,p->name,c_win);
-                }else if(compare_string(p->name,lot_parent)){
+                    cprintf("max= %d, t_num = %d, %s win %d time lottery\n",max,rd,run_p[i]->name,c_win);
+                }else if(compare_string(run_p[i]->name,lot_parent)){
                     p_win++;
-                    cprintf("max= %d, t_num = %d, %s win %d time lottery\n",max,rd,p->name,p_win);
+                    cprintf("max= %d, t_num = %d, %s win %d time lottery\n",max,rd,run_p[i]->name,p_win);
                 }
             }else{
                 //if i = 1, only one process;
